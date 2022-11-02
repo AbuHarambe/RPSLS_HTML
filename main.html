@@ -19,6 +19,14 @@
 	 			background: salmon;
 	 			border: none;
 			}
+            #spockButton {
+                opacity: 1;
+            }
+
+            #lizardButton {
+                opacity: 1;
+            }
+
 			button:hover {
 				background: lightsalmon;
 			}
@@ -172,6 +180,10 @@
 		<h1 style="font-size: 36;""text-align: center;">
 			The Game
 		</h1>
+        <div id="classicSwitch">
+            <input type="checkbox" id="classicCheckbox">
+            <label for="classicSwitch">Classic Game</label>
+        </div>
 		<aside>
 			Make your Choice!
 		</aside>
@@ -182,12 +194,13 @@
         <button id="scissorsButton">Scissors</button>
 			<script type="text/javascript">
 				//0=rock, 1=spock, 2=paper, 3=lizard, 4=scissors
-				var pcText;
+				var classicMode = 0;
+                var pcText;
 				var announcment;
 				var playerInput;
 				var pcInput;
 
-				function pcRandom() {
+				function pcRandomRPSLS() {
 					pcInput = Math.floor(Math.random() * 5);
 					if (pcInput == 0) {
 						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)"
@@ -207,14 +220,28 @@
 					document.getElementById("childPc").className = "play";
 				};
 
+				function pcRandomClassic() {
+					pcInput = Math.floor(Math.random() * 3);
+					if (pcInput == 0) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)"
+					}
+					else if (pcInput == 1) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/RQpLpFg/Paper.png)"
+					}
+					else if (pcInput == 2) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/ggsfSq7/Scissors.png)"
+					}
+					document.getElementById("childPc").className = "play";
+				};
+
 				function counterAdd(a) {
 					let startInt = parseInt(document.getElementById(a).innerHTML);
 					let newInt = startInt + 1;
 					document.getElementById(a).innerHTML = newInt;
 				}
 
-				function play() {
-					let intResult = ((pcInput - playerInput) % 5);
+				function playRPSLS() {
+					let intResult = (pcInput - playerInput);
 					setTimeout(function () {
 						if(intResult < 0) {
 							intResult+=5;
@@ -255,6 +282,38 @@
 					return intResult;
 				};
 
+                function playClassic() {
+                    let intResult = (pcInput - playerInput);
+					if(intResult < 0) {
+							intResult+=3;
+                            if(intResult = 0){
+                                announcment = "It's a Tie!";
+								counterAdd("ties");
+                            }
+                            else if (intResult = 1){
+                                announcment = "Pc Wins!";
+                                counterAdd("pcWins");
+                            }
+                            else {
+                                announcment = "Player Wins!";
+                                counterAdd("playerWins");
+                            }
+                        }
+                    else {
+                            if(intResult = 0){
+                                announcment = "It's a Tie!";
+								counterAdd("ties");
+                            }
+                            else if (intResult = 1){
+                                announcment = "Pc Wins!";
+                                counterAdd("pcWins");
+                            }
+                            else {
+                                announcment = "Player Wins!";
+                                counterAdd("playerWins");
+                            }
+                        }
+                };
 				function announce() {
 					if(pcInput == 0){
 						pcText = "PC chose Rock";
@@ -283,68 +342,84 @@
 					}, 2800);
 				}
 				//GUI Code
+                //Classic Game Switch
+                const clSwitch = document.getElementById("classicCheckbox");
+
+                clSwitch.addEventListener('change', 
+                function(){
+                    if (this.checked) {
+                        classicMode = 1;
+                        document.getElementById("spockButton").style.opacity="0";
+                        document.getElementById("lizardButton").style.opacity="0";
+                    }
+                    else{
+                        classicMode = 0;
+                        document.getElementById("spockButton").style.opacity="1";
+                        document.getElementById("lizardButton").style.opacity="1";
+                    }
+                });
 				//Buttons
                 const buttonRock = document.getElementById("rockButton");
 				
                 buttonRock.addEventListener ("click", function() {
-					pcRandom();
-					playerInput = 0;
-					document.getElementById("childPlayer").className = "play";
-					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
-					play();
-					resetPositions();
-					//announce();
-					//document.getElementById('result').innerHTML= announce();
+					if(clSwitch.checked) {
+                        pcRandomClassic();
+                        playerInput = 0;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playClassic();
+                        resetPositions();
+                    }
+                    else {
+                        pcRandomRPSLS();
+                        playerInput = 0;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playRPSLS();
+                        resetPositions();
+                    }
 				});
 				
                 const buttonSpock = document.getElementById("spockButton");
 
 				buttonSpock.addEventListener ("click", function() {
-					pcRandom();
+					pcRandomRPSLS();
 					playerInput = 1;
 					document.getElementById("childPlayer").className = "play";
 					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/N6pMRNv/Spock.png)";
-					play();
+					playRPSLS();
 					resetPositions();
-					//announce();
-					//document.getElementById('result').innerHTML= announce();
 				});
 
                 const buttonPaper = document.getElementById("paperButton");
 
 				buttonPaper.addEventListener ("click", function() {
-					pcRandom();
+					pcRandomRPSLS();
 					playerInput = 2;
 					document.getElementById("childPlayer").className = "play";
 					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/RQpLpFg/Paper.png)";
-					play();
+					playRPSLS();
 					resetPositions();
-					//announce();
-					//document.getElementById('result').innerHTML= announce();
 				});
 
                 const buttonLizard = document.getElementById("lizardButton")
 				buttonLizard.addEventListener ("click", function() {
-					pcRandom();
+					pcRandomRPSLS();
 					playerInput = 3;
 					document.getElementById("childPlayer").className = "play";
 					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/9wcXrfp/Lizard.png)";
-					play();
+					playRPSLS();
 					resetPositions();
-					//announce();
-					//document.getElementById('result').innerHTML= announce();
 				});
 
                 const buttonScissors = document.getElementById("scissorsButton")
 				buttonScissors.addEventListener ("click", function() {
-					pcRandom();
+					pcRandomRPSLS();
 					playerInput = 4;
 					document.getElementById("childPlayer").className = "play";
 					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/ggsfSq7/Scissors.png)";
-					play();
+					playRPSLS();
 					resetPositions();
-					//announce();
-					//document.getElementById('result').innerHTML= announce();
 				});
 		</script>
 		<div class="background">
