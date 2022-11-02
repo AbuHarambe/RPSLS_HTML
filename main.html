@@ -284,7 +284,8 @@
 
                 function playClassic() {
                     let intResult = (pcInput - playerInput);
-					if(intResult < 0) {
+					setTimeout(function() {
+                        if(intResult < 0) {
 							intResult+=3;
                             if(intResult = 0){
                                 announcment = "It's a Tie!";
@@ -292,10 +293,12 @@
                             }
                             else if (intResult = 1){
                                 announcment = "Pc Wins!";
+                                document.getElementById("childPlayer").className = "lose";
                                 counterAdd("pcWins");
                             }
                             else {
                                 announcment = "Player Wins!";
+                                document.getElementById("childPc").className = "lose";
                                 counterAdd("playerWins");
                             }
                         }
@@ -306,13 +309,16 @@
                             }
                             else if (intResult = 1){
                                 announcment = "Pc Wins!";
+                                document.getElementById("childPlayer").className = "lose";
                                 counterAdd("pcWins");
                             }
                             else {
                                 announcment = "Player Wins!";
+                                document.getElementById("childPc").className = "lose";
                                 counterAdd("playerWins");
                             }
                         }
+                    }, 1400);
                 };
 				function announce() {
 					if(pcInput == 0){
@@ -383,43 +389,68 @@
                 const buttonSpock = document.getElementById("spockButton");
 
 				buttonSpock.addEventListener ("click", function() {
-					pcRandomRPSLS();
-					playerInput = 1;
-					document.getElementById("childPlayer").className = "play";
-					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/N6pMRNv/Spock.png)";
-					playRPSLS();
-					resetPositions();
+                    if(clSwitch.checked) {}
+                    else {
+                        pcRandomRPSLS();
+                        playerInput = 1;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playRPSLS();
+                        resetPositions();
+                    }
 				});
 
                 const buttonPaper = document.getElementById("paperButton");
 
 				buttonPaper.addEventListener ("click", function() {
-					pcRandomRPSLS();
-					playerInput = 2;
-					document.getElementById("childPlayer").className = "play";
-					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/RQpLpFg/Paper.png)";
-					playRPSLS();
-					resetPositions();
-				});
+                    if(clSwitch.checked) {
+                        pcRandomClassic();
+                        playerInput = 1;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playClassic();
+                        resetPositions();
+                    }
+                    else {
+                        pcRandomRPSLS();
+                        playerInput = 2;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playRPSLS();
+                        resetPositions();
+                    }				});
 
                 const buttonLizard = document.getElementById("lizardButton")
 				buttonLizard.addEventListener ("click", function() {
-					pcRandomRPSLS();
-					playerInput = 3;
-					document.getElementById("childPlayer").className = "play";
-					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/9wcXrfp/Lizard.png)";
-					playRPSLS();
-					resetPositions();
+                    if(clSwitch.checked) {}
+                    else {
+                        pcRandomRPSLS();
+                        playerInput = 3;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playRPSLS();
+                        resetPositions();
+                    }
 				});
 
                 const buttonScissors = document.getElementById("scissorsButton")
 				buttonScissors.addEventListener ("click", function() {
-					pcRandomRPSLS();
-					playerInput = 4;
-					document.getElementById("childPlayer").className = "play";
-					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/ggsfSq7/Scissors.png)";
-					playRPSLS();
-					resetPositions();
+					if(clSwitch.checked) {
+                        pcRandomClassic();
+                        playerInput = 2;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playClassic();
+                        resetPositions();
+                    }
+                    else {
+                        pcRandomRPSLS();
+                        playerInput = 4;
+                        document.getElementById("childPlayer").className = "play";
+                        document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+                        playRPSLS();
+                        resetPositions();
+                    }
 				});
 		</script>
 		<div class="background">
