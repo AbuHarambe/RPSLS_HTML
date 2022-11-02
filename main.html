@@ -10,6 +10,8 @@
 				margin: 0;
 			}
 			button {
+                margin-right: -4px;
+                margin-left: 0;
 				margin-top: 20px;
 			  	line-height: 60px;
 	  			font-weight: bold;
@@ -173,6 +175,11 @@
 		<aside>
 			Make your Choice!
 		</aside>
+        <button id="rockButton">Rock</button>
+        <button id="spockButton">Spock</button>
+        <button id="paperButton">Paper</button>
+        <button id="lizardButton">Lizard</button>
+        <button id="scissorsButton">Scissors</button>
 			<script type="text/javascript">
 				//0=rock, 1=spock, 2=paper, 3=lizard, 4=scissors
 				var pcText;
@@ -277,15 +284,9 @@
 				}
 				//GUI Code
 				//Buttons
-				var buttonRock = document.createElement("button");
-				buttonRock.innerHTML = "Rock";
-
-				// 2. Append somewhere
-				var body = document.getElementsByTagName("body")[0];
-				body.appendChild(buttonRock);
-
-				// 3. Add event handler
-				buttonRock.addEventListener ("click", function() {
+                const buttonRock = document.getElementById("rockButton");
+				
+                buttonRock.addEventListener ("click", function() {
 					pcRandom();
 					playerInput = 0;
 					document.getElementById("childPlayer").className = "play";
@@ -296,14 +297,8 @@
 					//document.getElementById('result').innerHTML= announce();
 				});
 				
-				var buttonSpock = document.createElement("button");
-				buttonSpock.innerHTML = "Spock";
+                const buttonSpock = document.getElementById("spockButton");
 
-				// 2. Append somewhere
-				var body = document.getElementsByTagName("body")[0];
-				body.appendChild(buttonSpock);
-
-				// 3. Add event handler
 				buttonSpock.addEventListener ("click", function() {
 					pcRandom();
 					playerInput = 1;
@@ -315,14 +310,8 @@
 					//document.getElementById('result').innerHTML= announce();
 				});
 
-				var buttonPaper = document.createElement("button");
-				buttonPaper.innerHTML = "Paper";
+                const buttonPaper = document.getElementById("paperButton");
 
-				// 2. Append somewhere
-				var body = document.getElementsByTagName("body")[0];
-				body.appendChild(buttonPaper);
-
-				// 3. Add event handler
 				buttonPaper.addEventListener ("click", function() {
 					pcRandom();
 					playerInput = 2;
@@ -334,14 +323,7 @@
 					//document.getElementById('result').innerHTML= announce();
 				});
 
-				var buttonLizard = document.createElement("button");
-				buttonLizard.innerHTML = "Lizard";
-
-				// 2. Append somewhere
-				var body = document.getElementsByTagName("body")[0];
-				body.appendChild(buttonLizard);
-
-				// 3. Add event handler
+                const buttonLizard = document.getElementById("lizardButton")
 				buttonLizard.addEventListener ("click", function() {
 					pcRandom();
 					playerInput = 3;
@@ -353,14 +335,7 @@
 					//document.getElementById('result').innerHTML= announce();
 				});
 
-				var buttonScissors = document.createElement("button");
-				buttonScissors.innerHTML = "Scissors";
-
-				// 2. Append somewhere
-				var body = document.getElementsByTagName("body")[0];
-				body.appendChild(buttonScissors);
-
-				// 3. Add event handler
+                const buttonScissors = document.getElementById("scissorsButton")
 				buttonScissors.addEventListener ("click", function() {
 					pcRandom();
 					playerInput = 4;
@@ -374,7 +349,6 @@
 		</script>
 		<div class="background">
 			<div id="childPlayer" class="sprites"></div>
-
 			<div id="childPc" class="sprites"></div>
 		</div>
 		<label id="counter">Player Wins: <var id="playerWins">0</var>| Pc Wins: <var id="pcWins">0</var>| Ties: <var id="ties">0</var> </label>
