@@ -1,1 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title> RPSLS </title>
+		<style type="text/css">
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			button {
+				margin-top: 20px;
+			  	line-height: 60px;
+	  			font-weight: bold;
+				padding: 0 40px;
+	 			background: salmon;
+	 			border: none;
+			}
+			button:hover {
+				background: lightsalmon;
+			}
+			.background{
+				background-color: lightgrey;
+				height: 300px;
+				width: 605px;
+				position: relative;
+			}
+			#childPlayer{
+				background-image: url(https://i.ibb.co/vYngKVt/P1.png);
+				height: 64px;
+				width: 64px;
+				position: absolute;
+				bottom: 0;
+				left: 10px;
+			}
+			#childPc{
+				background-image: url(https://i.ibb.co/WFy6JFQ/PC.png);
+				height: 64px;
+				width: 64px;
+				position: absolute;
+				bottom: 0;
+				right: 10px;
+			}
+			#childPlayer.play{
+				animation: fightFromLeft 700ms linear normal forwards;
+			}
+			#childPlayer.lose{
+				animation: loseLeft 1400ms linear normal;
+			}
+			#childPc.play{
+				animation: fightFromRight 700ms linear normal forwards;
+			}
+			#childPc.lose{
+				animation: loseRight 1400ms linear normal;
+			}
+			@keyframes loseLeft{
+				0%{
+					opacity: 1;
+					left: 100px;
+				}
+				31.25%{
+					opacity: 1;
+				}
+				50%{
+					opacity: 0;
+				}
+				100%{
+					opacity: 0;
+					left: 100px
+				}
+			}
 
+			@keyframes loseRight{
+				0%{
+					opacity: 1;
+					right: 100px;
+				}
+				31.25%{
+					opacity: 1;
+				}
+				50%{
+					opacity: 0;
+				}
+				100%{
+					opacity: 0;
+					right: 100px;
+				}
+			}
+
+			@keyframes fightFromLeft{
+				12.5%{
+					left: 50px;
+					bottom: 75px;
+				}
+				25%{
+					left: 100px;
+					bottom: 115px;
+				}
+				37.5%{
+					left: 150px;
+					bottom: 130px;
+				}
+				50%{
+					left: 200px;
+					bottom: 118px;
+				}
+				62.5%{
+					left: 252.5px;
+					bottom: 75px;
+				}
+				75%{
+					left: 200px;
+					bottom: 90px;
+				}
+				87.5%{
+					left: 150px;
+					bottom: 80px;
+				}
+				93.75%{
+					left: 125px;
+					bottom: 60px;
+				}
+				100%{
+					left: 100px;
+					bottom: 0px;
+				}
+			}
+			@keyframes fightFromRight{
+				12.5%{
+					right: 50px;
+					bottom: 75px;
+				}
+				25%{
+					right: 100px;
+					bottom: 115px;
+				}
+				37.5%{
+					right: 150px;
+					bottom: 130px;
+				}
+				50%{
+					right: 200px;
+					bottom: 118px;
+				}
+				62.5%{
+					right: 252.5px;
+					bottom: 75px;
+				}
+				75%{
+					right: 200px;
+					bottom: 90px;
+				}
+				87.5%{
+					right: 150px;
+					bottom: 80px;
+				}
+				93.75%{
+					right: 125px;
+					bottom: 60px;
+				}
+				100%{
+					right: 100px;
+					bottom: 0px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<h1 style="font-size: 36;""text-align: center;">
+			The Game
+		</h1>
+		<aside>
+			Make your Choice!
+		</aside>
+			<script type="text/javascript">
+				//0=rock, 1=spock, 2=paper, 3=lizard, 4=scissors
+				var pcText;
+				var announcment;
+				var playerInput;
+				var pcInput;
+
+				function pcRandom() {
+					pcInput = Math.floor(Math.random() * 5);
+					if (pcInput == 0) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)"
+					}
+					else if (pcInput == 1) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/N6pMRNv/Spock.png)"
+					}
+					else if (pcInput == 2) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/RQpLpFg/Paper.png)"
+					}
+					else if (pcInput == 3) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/9wcXrfp/Lizard.png)"	
+					}
+					else if (pcInput == 4) {
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/ggsfSq7/Scissors.png)"
+					}
+					document.getElementById("childPc").className = "play";
+				};
+
+				function counterAdd(a) {
+					let startInt = parseInt(document.getElementById(a).innerHTML);
+					let newInt = startInt + 1;
+					document.getElementById(a).innerHTML = newInt;
+				}
+
+				function play() {
+					let intResult = ((pcInput - playerInput) % 5);
+					setTimeout(function () {
+						if(intResult < 0) {
+							intResult+=5;
+							if(intResult == 0){
+								announcment = "It's a Tie!";
+								counterAdd("ties");
+							}
+							else if (intResult <= 2) {
+								announcment = "PC wins!";
+								document.getElementById("childPlayer").className = "lose";
+								counterAdd("pcWins");
+							}
+							else if (intResult >= 3) {
+								announcment = "Player wins!";
+								document.getElementById("childPc").className = "lose";
+								counterAdd("playerWins");
+							}
+						}
+						else {
+							if(intResult == 0){
+								announcment = "It's a Tie!";
+								counterAdd("ties");
+							}
+							else if (intResult <= 2) {
+								announcment = "PC wins!";
+								document.getElementById("childPlayer").className = "lose";
+								counterAdd("pcWins");
+							}
+							else if (intResult >= 3) {
+								announcment = "Player wins!";
+								document.getElementById("childPc").className = "lose";
+								counterAdd("playerWins");
+							}
+						}
+
+					}, 1400);
+					//alert("calc: " + intResult + " pc: " + pcInput + " announcment: " + announcment);
+					return intResult;
+				};
+
+				function announce() {
+					if(pcInput == 0){
+						pcText = "PC chose Rock";
+					}
+					else if (pcInput == 1) {
+						pcText = "PC chose Spock";
+					}
+					else if (pcInput == 2) {
+						pcText = "PC chose Paper";
+					}
+					else if (pcInput == 3) {
+						pcText = "PC chose Lizard";
+					}
+					else if (pcInput == 4) {
+						pcText = "PC chose Scissors";
+					}
+					return (pcText + " " + "therefore" + " " +announcment);
+				};
+
+				function resetPositions() {
+					setTimeout(function () {
+						document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/vYngKVt/P1.png)"
+						document.getElementById('childPc').style.backgroundImage="url(https://i.ibb.co/WFy6JFQ/PC.png)"
+						document.getElementById("childPlayer").className = ""
+						document.getElementById("childPc").className = ""
+					}, 2800);
+				}
+				//GUI Code
+				//Buttons
+				var buttonRock = document.createElement("button");
+				buttonRock.innerHTML = "Rock";
+
+				// 2. Append somewhere
+				var body = document.getElementsByTagName("body")[0];
+				body.appendChild(buttonRock);
+
+				// 3. Add event handler
+				buttonRock.addEventListener ("click", function() {
+					pcRandom();
+					playerInput = 0;
+					document.getElementById("childPlayer").className = "play";
+					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/99MfV1J/THE-ROCK.png)";
+					play();
+					resetPositions();
+					//announce();
+					//document.getElementById('result').innerHTML= announce();
+				});
+				
+				var buttonSpock = document.createElement("button");
+				buttonSpock.innerHTML = "Spock";
+
+				// 2. Append somewhere
+				var body = document.getElementsByTagName("body")[0];
+				body.appendChild(buttonSpock);
+
+				// 3. Add event handler
+				buttonSpock.addEventListener ("click", function() {
+					pcRandom();
+					playerInput = 1;
+					document.getElementById("childPlayer").className = "play";
+					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/N6pMRNv/Spock.png)";
+					play();
+					resetPositions();
+					//announce();
+					//document.getElementById('result').innerHTML= announce();
+				});
+
+				var buttonPaper = document.createElement("button");
+				buttonPaper.innerHTML = "Paper";
+
+				// 2. Append somewhere
+				var body = document.getElementsByTagName("body")[0];
+				body.appendChild(buttonPaper);
+
+				// 3. Add event handler
+				buttonPaper.addEventListener ("click", function() {
+					pcRandom();
+					playerInput = 2;
+					document.getElementById("childPlayer").className = "play";
+					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/RQpLpFg/Paper.png)";
+					play();
+					resetPositions();
+					//announce();
+					//document.getElementById('result').innerHTML= announce();
+				});
+
+				var buttonLizard = document.createElement("button");
+				buttonLizard.innerHTML = "Lizard";
+
+				// 2. Append somewhere
+				var body = document.getElementsByTagName("body")[0];
+				body.appendChild(buttonLizard);
+
+				// 3. Add event handler
+				buttonLizard.addEventListener ("click", function() {
+					pcRandom();
+					playerInput = 3;
+					document.getElementById("childPlayer").className = "play";
+					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/9wcXrfp/Lizard.png)";
+					play();
+					resetPositions();
+					//announce();
+					//document.getElementById('result').innerHTML= announce();
+				});
+
+				var buttonScissors = document.createElement("button");
+				buttonScissors.innerHTML = "Scissors";
+
+				// 2. Append somewhere
+				var body = document.getElementsByTagName("body")[0];
+				body.appendChild(buttonScissors);
+
+				// 3. Add event handler
+				buttonScissors.addEventListener ("click", function() {
+					pcRandom();
+					playerInput = 4;
+					document.getElementById("childPlayer").className = "play";
+					document.getElementById('childPlayer').style.backgroundImage="url(https://i.ibb.co/ggsfSq7/Scissors.png)";
+					play();
+					resetPositions();
+					//announce();
+					//document.getElementById('result').innerHTML= announce();
+				});
+		</script>
+		<div class="background">
+			<div id="childPlayer" class="sprites"></div>
+
+			<div id="childPc" class="sprites"></div>
+		</div>
+		<label id="counter">Player Wins: <var id="playerWins">0</var>| Pc Wins: <var id="pcWins">0</var>| Ties: <var id="ties">0</var> </label>
+	</body>
+</html>
